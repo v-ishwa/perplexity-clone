@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:perplexity_clone/widgets/side_bar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -6,8 +7,17 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Perplexity')),
-      body: Center(child: const Text('Welcome to the Perplexity Clone!')),
+      body: Row(
+        children: [
+          SideBar(),
+          Column(
+            children: [
+              // search section
+              // footer
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
