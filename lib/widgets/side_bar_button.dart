@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:perplexity_clone/theme/colors.dart';
 
-class SideBarButton extends StatelessWidget {
+class SideBarButton extends StatefulWidget {
   final bool isCollapsed;
   final IconData icon;
   final String text;
@@ -13,28 +13,52 @@ class SideBarButton extends StatelessWidget {
   });
 
   @override
+  State<SideBarButton> createState() => _SideBarButtonState();
+}
+
+class _SideBarButtonState extends State<SideBarButton> {
+  bool isHovering = false;
+  @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: isCollapsed
-          ? MainAxisAlignment.center
-          : MainAxisAlignment.start,
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 14, horizontal: 10),
-          child: Icon(icon, color: AppColors.iconGrey, size: 22),
+    return MouseRegion(
+      onEnter: (event) {
+        setState(() {
+          isHovering = true;
+        });
+      },
+      onExit: (event) {
+        setState(() {
+          isHovering = false;
+        });
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: isHovering ? AppColors.proButton : Colors.transparent,
+          borderRadius: BorderRadius.circular(6),
         ),
-        SizedBox(width: isCollapsed ? 0 : 10),
-        isCollapsed
-            ? SizedBox(width: 0)
-            : Text(
-                text,
-                style: TextStyle(
-                  color: AppColors.iconGrey,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-      ],
+        child: Row(
+          mainAxisAlignment: widget.isCollapsed
+              ? MainAxisAlignment.center
+              : MainAxisAlignment.start,
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 14, horizontal: 10),
+              child: Icon(widget.icon, color: AppColors.iconGrey, size: 22),
+            ),
+            SizedBox(width: widget.isCollapsed ? 0 : 10),
+            widget.isCollapsed
+                ? const SizedBox(width: 0, height: 0)
+                : Text(
+                    widget.text,
+                    style: TextStyle(
+                      color: AppColors.textGrey,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+          ],
+        ),
+      ),
     );
   }
 }
